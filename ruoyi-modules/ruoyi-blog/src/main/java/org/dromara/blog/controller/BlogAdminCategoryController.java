@@ -26,7 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 博客分类后台接口
+ * 博客分类：后台 CRUD。
+ * <p>基路径：{@code /blog/admin/category}；权限前缀 {@code blog:category:*}。</p>
+ * <p>前台只读列表见 {@link BlogFrontCategoryController}。</p>
  *
  * @author ruoyi-blog
  */
@@ -38,18 +40,37 @@ public class BlogAdminCategoryController extends BaseController {
 
     private final IBlogCategoryService categoryService;
 
+    /**
+     * 分页查询分类。
+     *
+     * @param bo        查询条件
+     * @param pageQuery 分页
+     * @return 分页数据
+     */
     @SaCheckPermission("blog:category:list")
     @GetMapping("/list")
     public TableDataInfo<BlogCategoryVo> list(BlogCategoryBo bo, PageQuery pageQuery) {
         return categoryService.selectPage(bo, pageQuery);
     }
 
+    /**
+     * 按 id 查询分类详情。
+     *
+     * @param id 主键
+     * @return {@code R.ok(vo)}
+     */
     @SaCheckPermission("blog:category:query")
     @GetMapping("/{id}")
     public R<BlogCategoryVo> getInfo(@PathVariable Long id) {
         return R.ok(categoryService.getVoById(id));
     }
 
+    /**
+     * 新增分类。
+     *
+     * @param bo 请求体
+     * @return 写操作结果
+     */
     @SaCheckPermission("blog:category:add")
     @Log(title = "博客分类", businessType = BusinessType.INSERT)
     @RepeatSubmit
@@ -58,6 +79,12 @@ public class BlogAdminCategoryController extends BaseController {
         return toAjax(categoryService.insert(bo) > 0);
     }
 
+    /**
+     * 修改分类。
+     *
+     * @param bo 请求体（{@link BlogCategoryBo.EditGroup}）
+     * @return 写操作结果
+     */
     @SaCheckPermission("blog:category:edit")
     @Log(title = "博客分类", businessType = BusinessType.UPDATE)
     @RepeatSubmit
@@ -66,6 +93,12 @@ public class BlogAdminCategoryController extends BaseController {
         return toAjax(categoryService.update(bo) > 0);
     }
 
+    /**
+     * 批量删除分类。
+     *
+     * @param ids 主键数组
+     * @return 写操作结果
+     */
     @SaCheckPermission("blog:category:remove")
     @Log(title = "博客分类", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")

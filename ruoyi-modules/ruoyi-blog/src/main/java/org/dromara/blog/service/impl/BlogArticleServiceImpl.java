@@ -1,6 +1,10 @@
 package org.dromara.blog.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.lock.LockInfo;
+import com.baomidou.lock.LockTemplate;
+import com.baomidou.lock.executor.RedissonLockExecutor;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,6 +13,7 @@ import org.dromara.blog.constant.BlogConstants;
 import org.dromara.blog.domain.BlogArticle;
 import org.dromara.blog.domain.BlogArticleTag;
 import org.dromara.blog.domain.BlogCategory;
+import org.dromara.blog.domain.BlogComment;
 import org.dromara.blog.domain.BlogTag;
 import org.dromara.blog.domain.bo.BlogArticleBo;
 import org.dromara.blog.domain.vo.BlogArticleVo;
@@ -16,7 +21,6 @@ import org.dromara.blog.domain.vo.BlogTagVo;
 import org.dromara.blog.mapper.BlogArticleMapper;
 import org.dromara.blog.mapper.BlogArticleTagMapper;
 import org.dromara.blog.mapper.BlogCategoryMapper;
-import org.dromara.blog.domain.BlogComment;
 import org.dromara.blog.mapper.BlogCommentMapper;
 import org.dromara.blog.mapper.BlogTagMapper;
 import org.dromara.blog.service.IBlogArticleService;
@@ -25,6 +29,7 @@ import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.redis.utils.RedisUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +43,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 博客文章 Service 实现
+ * 博客文章 Service 实现（前台详情 Redis 缓存、点赞计数、浏览量与缓存解耦）
  *
  * @author ruoyi-blog
  */
@@ -51,6 +56,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
     private final BlogTagMapper tagMapper;
     private final BlogCategoryMapper categoryMapper;
     private final BlogCommentMapper commentMapper;
+    private final LockTemplate lockTemplate;
 
     @Override
     public TableDataInfo<BlogArticleVo> selectAdminPage(BlogArticleBo bo, PageQuery pageQuery) {
@@ -58,6 +64,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         lqw.orderByDesc(BlogArticle::getUpdateTime).orderByDesc(BlogArticle::getId);
         Page<BlogArticleVo> page = articleMapper.selectVoPage(pageQuery.build(), lqw);
         fillArticleExtras(page.getRecords());
+        fillArticleLikeCounts(page.getRecords());
         return TableDataInfo.build(page);
     }
 
@@ -69,6 +76,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         BlogArticleVo vo = articleMapper.selectVoById(id);
         if (vo != null) {
             fillArticleExtras(Collections.singletonList(vo));
+            fillArticleLikeCounts(Collections.singletonList(vo));
         }
         return vo;
     }
@@ -93,6 +101,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         BlogArticle entity = MapstructUtils.convert(bo, BlogArticle.class);
         int rows = articleMapper.updateById(entity);
         replaceArticleTags(bo.getId(), bo.getTagIds());
+        evictArticleDetailCache(bo.getId());
         return rows;
     }
 
@@ -108,6 +117,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
             commentMapper.delete(
                 Wrappers.<BlogComment>lambdaQuery().eq(BlogComment::getArticleId, id));
             articleMapper.deleteById(id);
+            evictArticleDetailCache(id);
         }
         return ids.size();
     }
@@ -126,6 +136,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         lqw.orderByDesc(BlogArticle::getCreateTime);
         Page<BlogArticleVo> page = articleMapper.selectVoPage(pageQuery.build(), lqw);
         fillArticleExtras(page.getRecords());
+        fillArticleLikeCounts(page.getRecords());
         return TableDataInfo.build(page);
     }
 
@@ -134,6 +145,59 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         if (id == null) {
             return null;
         }
+        String cacheKey = BlogConstants.REDIS_ARTICLE_FRONT_DETAIL_PREFIX + id;
+        BlogArticleVo cached = RedisUtils.getCacheObject(cacheKey);
+        if (cached != null) {
+            return attachPublishedDetailRealtime(id, cached);
+        }
+        String lockName = BlogConstants.LOCK_ARTICLE_DETAIL_LOAD_PREFIX + id;
+        LockInfo lockInfo = lockTemplate.lock(
+            lockName,
+            BlogConstants.LOCK_LEASE_MS,
+            BlogConstants.LOCK_ACQUIRE_MS,
+            RedissonLockExecutor.class);
+        if (lockInfo == null) {
+            BlogArticleVo retry = RedisUtils.getCacheObject(cacheKey);
+            return retry != null ? attachPublishedDetailRealtime(id, retry) : loadAndCachePublishedDetail(id, cacheKey);
+        }
+        try {
+            BlogArticleVo again = RedisUtils.getCacheObject(cacheKey);
+            if (again != null) {
+                return attachPublishedDetailRealtime(id, again);
+            }
+            return loadAndCachePublishedDetail(id, cacheKey);
+        } finally {
+            lockTemplate.releaseLock(lockInfo);
+        }
+    }
+
+    private BlogArticleVo loadAndCachePublishedDetail(Long id, String cacheKey) {
+        BlogArticleVo loaded = loadPublishedDetailVoFromDb(id);
+        if (loaded == null) {
+            return null;
+        }
+        BlogArticleVo toCache = BeanUtil.toBean(loaded, BlogArticleVo.class);
+        toCache.setViewCount(null);
+        RedisUtils.setCacheObject(cacheKey, toCache, BlogConstants.ARTICLE_FRONT_DETAIL_TTL);
+        return attachPublishedDetailRealtime(id, toCache);
+    }
+
+    /**
+     * 缓存命中后合并实时浏览量（DB 原子自增 + 读回）与 Redis 点赞数。
+     */
+    private BlogArticleVo attachPublishedDetailRealtime(Long id, BlogArticleVo fromCache) {
+        BlogArticleVo out = BeanUtil.toBean(fromCache, BlogArticleVo.class);
+        articleMapper.incrViewCount(id, 1L);
+        BlogArticle vcRow = articleMapper.selectOne(
+            Wrappers.<BlogArticle>lambdaQuery()
+                .select(BlogArticle::getViewCount)
+                .eq(BlogArticle::getId, id));
+        out.setViewCount(vcRow != null && vcRow.getViewCount() != null ? vcRow.getViewCount() : 0L);
+        out.setLikeCount(likeCountArticle(id));
+        return out;
+    }
+
+    private BlogArticleVo loadPublishedDetailVoFromDb(Long id) {
         BlogArticle row = articleMapper.selectOne(
             Wrappers.<BlogArticle>lambdaQuery()
                 .eq(BlogArticle::getId, id)
@@ -141,15 +205,15 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         if (row == null) {
             return null;
         }
-        articleMapper.incrViewCount(id, 1L);
         BlogArticleVo vo = MapstructUtils.convert(row, BlogArticleVo.class);
-        if (vo.getViewCount() != null) {
-            vo.setViewCount(vo.getViewCount() + 1);
-        } else {
-            vo.setViewCount(1L);
-        }
         fillArticleExtras(Collections.singletonList(vo));
         return vo;
+    }
+
+    private void evictArticleDetailCache(Long id) {
+        if (id != null) {
+            RedisUtils.deleteObject(BlogConstants.REDIS_ARTICLE_FRONT_DETAIL_PREFIX + id);
+        }
     }
 
     @Override
@@ -161,6 +225,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         Page<BlogArticleVo> page = articleMapper.selectVoPage(new Page<>(1, n), lqw);
         List<BlogArticleVo> records = page.getRecords();
         fillArticleExtras(records);
+        fillArticleLikeCounts(records);
         return records;
     }
 
@@ -173,7 +238,50 @@ public class BlogArticleServiceImpl implements IBlogArticleService {
         Page<BlogArticleVo> page = articleMapper.selectVoPage(new Page<>(1, n), lqw);
         List<BlogArticleVo> records = page.getRecords();
         fillArticleExtras(records);
+        fillArticleLikeCounts(records);
         return records;
+    }
+
+    @Override
+    public long likePublishedArticle(Long articleId, String voterKey) {
+        if (articleId == null) {
+            throw new ServiceException("参数错误");
+        }
+        Long exists = articleMapper.selectCount(
+            Wrappers.<BlogArticle>lambdaQuery()
+                .eq(BlogArticle::getId, articleId)
+                .eq(BlogArticle::getStatus, BlogConstants.STATUS_PUBLISHED));
+        if (exists == null || exists == 0L) {
+            throw new ServiceException("文章不存在或未发布");
+        }
+        String safe = sanitizeVoterKey(voterKey);
+        String voterRedisKey = BlogConstants.REDIS_ARTICLE_LIKE_VOTER_PREFIX + articleId + ":" + safe;
+        if (RedisUtils.setObjectIfAbsent(voterRedisKey, "1", BlogConstants.LIKE_VOTER_TTL)) {
+            RedisUtils.incrAtomicValue(BlogConstants.REDIS_ARTICLE_LIKE_COUNT_PREFIX + articleId);
+        }
+        return likeCountArticle(articleId);
+    }
+
+    private static long likeCountArticle(Long articleId) {
+        return RedisUtils.getAtomicValue(BlogConstants.REDIS_ARTICLE_LIKE_COUNT_PREFIX + articleId);
+    }
+
+    private static void fillArticleLikeCounts(List<BlogArticleVo> records) {
+        if (CollUtil.isEmpty(records)) {
+            return;
+        }
+        for (BlogArticleVo vo : records) {
+            if (vo.getId() != null) {
+                vo.setLikeCount(likeCountArticle(vo.getId()));
+            }
+        }
+    }
+
+    private static String sanitizeVoterKey(String voterKey) {
+        if (voterKey == null || voterKey.isBlank()) {
+            return "unknown";
+        }
+        return voterKey.replace(':', '_');
     }
 
     private void validateCategory(Long categoryId) {

@@ -29,6 +29,10 @@ public class BlogArticleVo implements Serializable {
     private Long categoryId;
     private Integer status;
     private Long viewCount;
+
+    /** 点赞数（Redis 计数，非表字段） */
+    private Long likeCount;
+
     private Date createTime;
     private Date updateTime;
 

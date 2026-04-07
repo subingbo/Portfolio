@@ -22,4 +22,19 @@ public final class PortfolioConstants {
     /** 分布式锁：等待 5s，租约 30s（与 demo RedisLockController 惯例一致，可按集群调优） */
     public static final long LOCK_ACQUIRE_MS = 5_000L;
     public static final long LOCK_LEASE_MS = 30_000L;
+
+    /** 点赞总数：portfolio:project:like:count:{id} */
+    public static final String REDIS_PROJECT_LIKE_COUNT_PREFIX = "portfolio:project:like:count:";
+
+    /** 访客是否已赞：portfolio:project:like:voter:{id}:{voterKey} */
+    public static final String REDIS_PROJECT_LIKE_VOTER_PREFIX = "portfolio:project:like:voter:";
+
+    public static final Duration LIKE_VOTER_TTL = Duration.ofDays(30);
+
+    /** 公开接口滑动窗口 key 前缀：portfolio:app:sw:{endpoint}:{ip} */
+    public static final String REDIS_APP_SLIDING_PREFIX = "portfolio:app:sw:";
+
+    public static final Duration APP_SLIDING_WINDOW = Duration.ofMinutes(1);
+
+    public static final int APP_SLIDING_MAX = 120;
 }

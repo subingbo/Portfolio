@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
@@ -49,6 +50,7 @@ public class PortfolioProjectServiceImpl implements IPortfolioProjectService {
         LambdaQueryWrapper<PortfolioProject> lqw = buildQueryWrapper(bo);
         lqw.orderByDesc(PortfolioProject::getCreateTime);
         Page<PortfolioProjectVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw);
+        fillProjectLikeCounts(page.getRecords());
         return TableDataInfo.build(page);
     }
 
@@ -117,12 +119,22 @@ public class PortfolioProjectServiceImpl implements IPortfolioProjectService {
     @Override
     public PortfolioProjectVo getDetailVo(Long id) {
         PortfolioProject entity = getById(id);
-        return entity != null ? MapstructUtils.convert(entity, PortfolioProjectVo.class) : null;
+        if (entity == null) {
+            return null;
+        }
+        PortfolioProjectVo vo = MapstructUtils.convert(entity, PortfolioProjectVo.class);
+        fillProjectLike(vo);
+        return vo;
     }
 
     @Override
     public PortfolioProjectVo getVoForAdmin(Long id) {
-        return id == null ? null : baseMapper.selectVoById(id);
+        if (id == null) {
+            return null;
+        }
+        PortfolioProjectVo vo = baseMapper.selectVoById(id);
+        fillProjectLike(vo);
+        return vo;
     }
 
     @Override
@@ -131,7 +143,9 @@ public class PortfolioProjectServiceImpl implements IPortfolioProjectService {
         LambdaQueryWrapper<PortfolioProject> lqw = Wrappers.lambdaQuery();
         lqw.orderByDesc(PortfolioProject::getViewCount);
         Page<PortfolioProjectVo> page = baseMapper.selectVoPage(new Page<>(1, n), lqw);
-        return page.getRecords();
+        List<PortfolioProjectVo> records = page.getRecords();
+        fillProjectLikeCounts(records);
+        return records;
     }
 
     @Override
@@ -140,7 +154,9 @@ public class PortfolioProjectServiceImpl implements IPortfolioProjectService {
         LambdaQueryWrapper<PortfolioProject> lqw = Wrappers.lambdaQuery();
         lqw.orderByDesc(PortfolioProject::getCreateTime);
         Page<PortfolioProjectVo> page = baseMapper.selectVoPage(new Page<>(1, n), lqw);
-        return page.getRecords();
+        List<PortfolioProjectVo> records = page.getRecords();
+        fillProjectLikeCounts(records);
+        return records;
     }
 
     @Override
@@ -153,7 +169,51 @@ public class PortfolioProjectServiceImpl implements IPortfolioProjectService {
         lqw.like(PortfolioProject::getName, keyword.trim());
         lqw.orderByDesc(PortfolioProject::getCreateTime);
         Page<PortfolioProjectVo> page = baseMapper.selectVoPage(new Page<>(1, n), lqw);
-        return page.getRecords();
+        List<PortfolioProjectVo> records = page.getRecords();
+        fillProjectLikeCounts(records);
+        return records;
+    }
+
+    @Override
+    public long likeProject(Long projectId, String voterKey) {
+        if (projectId == null) {
+            throw new ServiceException("参数错误");
+        }
+        if (baseMapper.selectById(projectId) == null) {
+            throw new ServiceException("项目不存在");
+        }
+        String safe = sanitizeVoterKey(voterKey);
+        String voterRedisKey = PortfolioConstants.REDIS_PROJECT_LIKE_VOTER_PREFIX + projectId + ":" + safe;
+        if (RedisUtils.setObjectIfAbsent(voterRedisKey, "1", PortfolioConstants.LIKE_VOTER_TTL)) {
+            RedisUtils.incrAtomicValue(PortfolioConstants.REDIS_PROJECT_LIKE_COUNT_PREFIX + projectId);
+        }
+        return projectLikeCount(projectId);
+    }
+
+    private static String sanitizeVoterKey(String voterKey) {
+        if (voterKey == null || voterKey.isBlank()) {
+            return "unknown";
+        }
+        return voterKey.replace(':', '_');
+    }
+
+    private static long projectLikeCount(Long projectId) {
+        return RedisUtils.getAtomicValue(PortfolioConstants.REDIS_PROJECT_LIKE_COUNT_PREFIX + projectId);
+    }
+
+    private static void fillProjectLike(PortfolioProjectVo vo) {
+        if (vo != null && vo.getId() != null) {
+            vo.setLikeCount(projectLikeCount(vo.getId()));
+        }
+    }
+
+    private static void fillProjectLikeCounts(List<PortfolioProjectVo> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        for (PortfolioProjectVo vo : list) {
+            fillProjectLike(vo);
+        }
     }
 
     @Override

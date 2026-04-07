@@ -26,6 +26,10 @@ public class PortfolioProjectVo implements Serializable {
     private String demoUrl;
     private String coverImage;
     private Long viewCount;
+
+    /** 点赞数（Redis 计数，非表字段） */
+    private Long likeCount;
+
     private Date createTime;
     private Date updateTime;
 }
