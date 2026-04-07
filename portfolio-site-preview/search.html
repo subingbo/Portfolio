@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>搜索</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <a href="projects.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">项目</a>
+          <a href="blog.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">博客</a>
+          <a href="profile.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">个人</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#f3f0e7] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <header class="mb-12 max-w-3xl md:mb-16 lg:ml-2">
+          <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">搜索</h1>
+          <p class="mt-6 text-base leading-relaxed text-stone-600">仅 UI：输入框 + 结果列表区。真实实现可走全文索引或数据库 ILIKE，视数据量而定。</p>
+        </header>
+
+        <main class="mx-auto max-w-3xl space-y-14 lg:ml-4" data-page="search">
+          <form class="max-w-xl" action="#" method="get" role="search">
+            <label for="q" class="sr-only">搜索关键字</label>
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
+              <input
+                id="q"
+                name="q"
+                type="search"
+                value="幂等"
+                class="min-w-0 flex-1 rounded-lg border border-stone-200 bg-white px-4 py-3 text-stone-900 shadow-sm outline-none transition focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/30"
+              />
+              <button
+                type="submit"
+                class="rounded-lg bg-emerald-800 px-6 py-3 text-sm font-medium text-[#faf8f3] shadow-md shadow-emerald-900/10 transition hover:bg-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0e7]"
+              >
+                搜索（静态）
+              </button>
+            </div>
+          </form>
+
+          <section aria-labelledby="search-results">
+            <h2 id="search-results" class="font-serif text-2xl font-semibold text-stone-900">结果 · 占位</h2>
+            <ul class="mt-8 m-0 divide-y divide-stone-200 border-y border-stone-200 bg-white/90 p-0 shadow-sm md:rounded-xl md:border">
+              <li class="px-4 py-7 transition hover:bg-emerald-50/40 sm:px-6">
+                <p class="text-xs font-semibold uppercase tracking-wider text-stone-500">文章</p>
+                <a href="post.html" class="mt-2 inline-block font-serif text-base font-semibold text-emerald-950 transition hover:text-emerald-800">迁移脚本的可重复执行条件</a>
+                <p class="mt-2 text-sm leading-relaxed text-stone-600">匹配：幂等 / 重试 / checksum…</p>
+              </li>
+              <li class="px-4 py-7 transition hover:bg-emerald-50/40 sm:px-6">
+                <p class="text-xs font-semibold uppercase tracking-wider text-stone-500">项目</p>
+                <a href="project-detail.html" class="mt-2 inline-block font-serif text-base font-semibold text-emerald-950 transition hover:text-emerald-800">内部工单编排服务</a>
+                <p class="mt-2 text-sm leading-relaxed text-stone-600">匹配：幂等写入 / 状态机…</p>
+              </li>
+            </ul>
+          </section>
+        </main>
+
+        <footer class="mt-16 border-t border-emerald-900/10 pt-10 text-sm text-stone-600 md:mt-20">
+          <a href="index.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">首页</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

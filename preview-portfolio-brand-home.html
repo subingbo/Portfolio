@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>作品集 · 首页预览</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "ui-sans-serif",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Helvetica Neue",
+                "Arial",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              brand: {
+                fg: "#e7e5e4",
+                muted: "#a8a29e",
+                dim: "#57534e",
+                accent: "#f5d090",
+                accenthover: "#fde68a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-[#0c0c0c] text-brand-fg antialiased selection:bg-neutral-700 selection:text-white">
+    <!--
+      非对称三栏：左窄轨 | 中栏大图（视觉主体）| 右栏超大标题+克制正文。
+      底部 Events 仅横跨中+右列；禁止三等分与居中 Hero。
+    -->
+    <div
+      class="flex min-h-[100dvh] flex-col lg:grid lg:min-h-screen lg:grid-cols-[minmax(4.5rem,5.75rem)_minmax(0,1.55fr)_minmax(17rem,0.62fr)] lg:grid-rows-[minmax(0,1fr)_auto]"
+      data-layout="brand-asymmetric-home"
+    >
+      <!-- 模块：左侧栏 -->
+      <aside
+        class="z-20 flex shrink-0 items-center justify-between gap-4 border-b border-neutral-800/80 bg-[#101010] px-5 py-4 lg:row-span-2 lg:flex-col lg:items-stretch lg:justify-between lg:border-b-0 lg:border-r lg:border-neutral-800/80 lg:px-0 lg:py-10"
+        data-module="rail-left"
+      >
+        <div class="flex items-center gap-3 lg:flex-col lg:items-center lg:gap-8">
+          <p class="text-[10px] font-medium uppercase tracking-[0.35em] text-neutral-600 lg:order-2">Index</p>
+          <nav aria-label="主要" class="flex gap-5 text-xs font-medium tracking-wide text-brand-muted lg:flex-col lg:gap-7 lg:text-[11px]">
+            <a
+              class="text-brand-fg transition duration-200 hover:text-brand-accenthover hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010]"
+              href="#"
+              >Home</a
+            >
+            <a
+              class="transition duration-200 hover:text-brand-accenthover hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010]"
+              href="#"
+              >Work</a
+            >
+            <a
+              class="transition duration-200 hover:text-brand-accenthover hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010]"
+              href="#"
+              >About</a
+            >
+          </nav>
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:flex-col lg:items-center lg:justify-center">
+          <p class="text-[10px] font-medium uppercase tracking-[0.28em] text-neutral-600 [writing-mode:vertical-rl]">Systems &amp; delivery</p>
+        </div>
+        <div class="flex items-center gap-4 lg:flex-col lg:gap-5">
+          <a
+            class="text-[11px] tracking-wide text-brand-muted transition duration-200 hover:-translate-y-0.5 hover:text-brand-accenthover focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010]"
+            href="#"
+            >GitHub</a
+          >
+          <a
+            class="text-[11px] tracking-wide text-brand-muted transition duration-200 hover:-translate-y-0.5 hover:text-brand-accenthover focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010]"
+            href="#"
+            >LinkedIn</a
+          >
+        </div>
+      </aside>
+
+      <!-- 模块：中部主视觉（前景 <img>，非背景） -->
+      <figure
+        class="relative order-first min-h-[52vh] w-full overflow-hidden bg-[#141414] lg:order-none lg:min-h-0 lg:h-full"
+        data-module="hero-visual"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=1600&amp;q=82"
+          alt="建筑体量与光线，占位主视觉"
+          width="1600"
+          height="2000"
+          class="h-full w-full object-cover object-center transition duration-300 ease-out hover:opacity-[0.92] hover:scale-[1.01]"
+        />
+        <figcaption class="sr-only">主编排摄影占位：可换为作品实拍或产品静物。</figcaption>
+      </figure>
+
+      <!-- 模块：右侧叙事 -->
+      <section
+        class="flex flex-col justify-end bg-[#0f0f0f] px-6 pb-12 pt-10 sm:px-8 sm:pb-14 sm:pt-12 lg:px-10 lg:pb-16 lg:pt-20"
+        data-module="hero-copy"
+        aria-labelledby="home-heading"
+      >
+        <div class="max-w-lg lg:max-w-none">
+          <p class="mb-6 text-[11px] font-medium uppercase tracking-[0.32em] text-brand-dim">Portfolio preview</p>
+          <h1 id="home-heading" class="text-[clamp(2.75rem,7vw,6.75rem)] font-semibold leading-[0.92] tracking-[-0.03em] text-brand-fg">
+            结构先于
+            <span class="text-brand-accent">表象</span>
+          </h1>
+          <p class="mt-10 max-w-sm text-sm leading-relaxed text-brand-muted lg:max-w-[22rem]">
+            关注系统如何被搭建与交接：接口边界、失败语义、迁移窗口。更在意可读性与可回滚，而非单点视觉炫技。
+          </p>
+          <p class="mt-6 max-w-sm text-sm leading-relaxed text-brand-muted/90 lg:max-w-[20rem]">
+            本站仅呈现可公开摘要；完整交付件留在评审包与审计轨迹中。
+          </p>
+          <a
+            class="mt-12 inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-brand-accent transition duration-200 hover:gap-3 hover:text-brand-accenthover focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-4 focus-visible:ring-offset-[#0f0f0f]"
+            href="#"
+            >查看条目<span aria-hidden="true">→</span></a
+          >
+        </div>
+      </section>
+
+      <!-- 模块：底部 Events / News — 横向条，无卡片矩阵 -->
+      <footer
+        class="order-last border-t border-neutral-800/90 bg-[#121212] lg:col-span-2 lg:col-start-2"
+        data-module="site-events"
+      >
+        <div class="px-6 py-12 sm:px-8 lg:px-10 lg:py-14">
+          <div class="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <h2 class="text-[11px] font-medium uppercase tracking-[0.35em] text-neutral-600">Events / news</h2>
+            <p class="max-w-md text-xs leading-relaxed text-brand-dim">占位：近期公开分享、版本记录或改版说明（文本主导）。</p>
+          </div>
+          <div class="flex flex-col gap-10 lg:flex-row lg:flex-wrap lg:items-start lg:gap-x-12 lg:gap-y-12 xl:gap-x-16">
+            <div class="flex max-w-md gap-5 lg:flex-[1.25] lg:gap-6 transition duration-200 hover:opacity-90">
+              <div class="h-16 w-[4.5rem] shrink-0 overflow-hidden bg-neutral-900 sm:h-[4.75rem] sm:w-24">
+                <img
+                  src="https://images.unsplash.com/photo-1634015584592-9240849f1ebb?auto=format&amp;fit=crop&amp;w=240&amp;h=240&amp;q=80"
+                  alt=""
+                  width="240"
+                  height="240"
+                  class="size-full object-cover opacity-90"
+                />
+              </div>
+              <div class="min-w-0 border-l border-neutral-800/90 pl-5 sm:pl-6">
+                <p class="text-[11px] tabular-nums text-brand-dim">2026 · Mar</p>
+                <p class="mt-2 text-sm font-medium leading-snug text-brand-fg">内部错误码规范 v2 草稿释出</p>
+                <p class="mt-2 text-xs leading-relaxed text-brand-muted">对客户端可见集合收窄；内部 ticket 映射单独维护。</p>
+              </div>
+            </div>
+            <div class="flex max-w-sm gap-5 lg:flex-1 lg:gap-6 transition duration-200 hover:opacity-90">
+              <div class="h-16 w-[4.5rem] shrink-0 overflow-hidden bg-neutral-900 sm:h-[4.75rem] sm:w-24">
+                <img
+                  src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&amp;fit=crop&amp;w=240&amp;h=240&amp;q=80"
+                  alt=""
+                  width="240"
+                  height="240"
+                  class="size-full object-cover opacity-90"
+                />
+              </div>
+              <div class="min-w-0 border-l border-neutral-800/90 pl-5 sm:pl-6">
+                <p class="text-[11px] tabular-nums text-brand-dim">2026 · Jan</p>
+                <p class="mt-2 text-sm font-medium leading-snug text-brand-fg">作品集站点重构至静态编排</p>
+                <p class="mt-2 text-xs leading-relaxed text-brand-muted">为后续 Vue 拆分预留模块边界与命名。</p>
+              </div>
+            </div>
+            <div class="flex max-w-sm gap-5 border-neutral-800/80 lg:flex-1 lg:border-l lg:pl-10 lg:pt-0 xl:pl-12">
+              <div class="hidden w-px shrink-0 bg-neutral-800/50 lg:block" aria-hidden="true"></div>
+              <div class="min-w-0 lg:pt-0.5">
+                <p class="text-[11px] font-medium uppercase tracking-[0.28em] text-brand-dim">Contact</p>
+                <a
+                  class="mt-4 block text-sm text-brand-accent transition duration-200 hover:text-brand-accenthover hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
+                  href="mailto:you@example.dev"
+                  >you@example.dev</a
+                >
+                <p class="mt-4 text-xs leading-relaxed text-brand-muted">预约评审请附时间窗口与参考资料链接（占位）。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

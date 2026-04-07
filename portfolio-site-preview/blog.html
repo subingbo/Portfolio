@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>博客索引</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <a href="projects.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">项目</a>
+          <span class="font-medium text-emerald-900" aria-current="page">博客</span>
+          <a href="profile.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">个人</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#eef6f0] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <header class="mb-12 max-w-3xl md:mb-16 lg:ml-2">
+          <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">文章</h1>
+          <p class="mt-6 text-base leading-relaxed text-stone-600">列表即索引：标题、日期、可选标签行。不做封面网格。</p>
+        </header>
+
+        <main data-page="blog-index" class="max-w-3xl lg:ml-4">
+          <div class="mb-10 flex flex-wrap items-center justify-between gap-6 border-b border-stone-200 pb-8">
+            <p class="text-sm text-stone-600">
+              <a href="tags.html" class="font-medium text-emerald-800 underline decoration-emerald-800/30 underline-offset-4 transition hover:text-emerald-900">按标签浏览</a>
+              <span class="mx-2 text-stone-400" aria-hidden="true">·</span>
+              <a href="search.html" class="font-medium text-emerald-800 underline decoration-emerald-800/30 underline-offset-4 transition hover:text-emerald-900">搜索</a>
+            </p>
+          </div>
+          <nav aria-label="文章列表">
+            <ul class="m-0 divide-y divide-stone-200 border-y border-stone-200 bg-white/80 p-0 shadow-sm md:rounded-xl md:border">
+              <li class="transition hover:bg-emerald-50/50">
+                <div class="flex flex-col gap-2 px-4 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-8 md:px-6">
+                  <div class="min-w-0">
+                    <a href="post.html" class="font-serif text-base font-semibold text-emerald-950 transition hover:text-emerald-800">迁移脚本的可重复执行条件</a>
+                    <p class="mt-2 text-sm text-stone-600">标签：迁移 · 数据库 · 运维</p>
+                  </div>
+                  <time class="shrink-0 text-sm tabular-nums text-stone-500" datetime="2026-03-12">2026-03-12</time>
+                </div>
+              </li>
+              <li class="transition hover:bg-emerald-50/50">
+                <div class="flex flex-col gap-2 px-4 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-8 md:px-6">
+                  <div class="min-w-0">
+                    <a href="post.html" class="font-serif text-base font-semibold text-emerald-950 transition hover:text-emerald-800">错误码分层：何时不暴露内部原因</a>
+                    <p class="mt-2 text-sm text-stone-600">标签：API · 安全</p>
+                  </div>
+                  <time class="shrink-0 text-sm tabular-nums text-stone-500" datetime="2026-01-28">2026-01-28</time>
+                </div>
+              </li>
+              <li class="transition hover:bg-emerald-50/50">
+                <div class="flex flex-col gap-2 px-4 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-8 md:px-6">
+                  <div class="min-w-0">
+                    <a href="post.html" class="font-serif text-base font-semibold text-emerald-950 transition hover:text-emerald-800">日志字段最小集与检索成本</a>
+                    <p class="mt-2 text-sm text-stone-600">标签：可观测性</p>
+                  </div>
+                  <time class="shrink-0 text-sm tabular-nums text-stone-500" datetime="2025-11-04">2025-11-04</time>
+                </div>
+              </li>
+              <li class="transition hover:bg-emerald-50/50">
+                <div class="flex flex-col gap-2 px-4 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-8 md:px-6">
+                  <div class="min-w-0">
+                    <a href="post.html" class="font-serif text-base font-semibold text-emerald-950 transition hover:text-emerald-800">分页游标与排序稳定性</a>
+                    <p class="mt-2 text-sm text-stone-600">标签：API · 数据一致</p>
+                  </div>
+                  <time class="shrink-0 text-sm tabular-nums text-stone-500" datetime="2025-08-19">2025-08-19</time>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </main>
+
+        <footer class="mt-16 border-t border-emerald-900/10 pt-10 text-sm text-stone-600 md:mt-20">
+          <a href="recent-comments.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">近期评论</a>
+          <span class="mx-2 text-stone-400" aria-hidden="true">·</span>
+          <a href="index.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">首页</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

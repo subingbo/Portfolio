@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>隐私与日志</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#eef6f0] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <article class="mx-auto max-w-3xl space-y-14 lg:ml-4" data-page="privacy">
+          <header class="space-y-6">
+            <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">隐私与日志</h1>
+            <p class="text-base leading-relaxed text-stone-600">占位条款：用于审核「合规向页面」在极简风格下的可读性。正式文本应由法务或负责人审定。</p>
+          </header>
+          <section aria-labelledby="priv-collect">
+            <h2 id="priv-collect" class="mb-6 font-serif text-2xl font-semibold text-stone-900">收集范围（草案）</h2>
+            <ul class="m-0 space-y-4 border-l-2 border-emerald-800/25 pl-6 text-base leading-relaxed text-stone-600 sm:pl-8">
+              <li>访问日志：时间、路径、状态码、User-Agent（可配置脱敏）。</li>
+              <li>评论：昵称、正文、IP 哈希（占位说明）、发布时间与归属文章。</li>
+              <li>账号：邮箱、密码散列、会话令牌元数据。</li>
+            </ul>
+          </section>
+          <section aria-labelledby="priv-retention">
+            <h2 id="priv-retention" class="mb-6 font-serif text-2xl font-semibold text-stone-900">保留周期（草案）</h2>
+            <p class="text-base leading-relaxed text-stone-600">日志默认保留 90 天；评论与文章内容长期保留直至所有者删除或依法要求下线。</p>
+          </section>
+        </article>
+
+        <footer class="mx-auto mt-16 max-w-3xl border-t border-emerald-900/10 pt-10 text-sm text-stone-600 lg:ml-4 md:mt-20">
+          <a href="index.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">首页</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

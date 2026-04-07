@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>作品集与博客 · 层次与节奏预览</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "ui-sans-serif",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Helvetica Neue",
+                "Arial",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              accent: {
+                DEFAULT: "#2dd4bf",
+                hover: "#5eead4",
+                soft: "rgba(45, 212, 191, 0.14)",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-neutral-950 text-neutral-300 antialiased selection:bg-neutral-700 selection:text-neutral-100">
+    <div class="min-h-screen">
+      <!-- 模块：自述 — 偏左、非居中主轴线 -->
+      <section class="border-b border-neutral-800/60 bg-neutral-900/55" data-module="intro">
+        <div class="mx-auto max-w-6xl px-6 pb-20 pt-16 sm:px-10 sm:pb-24 sm:pt-20">
+          <div class="max-w-3xl pr-4 sm:pr-8 lg:ml-4 lg:mr-auto xl:ml-10">
+            <p class="text-sm font-medium tracking-wide text-neutral-500 transition duration-200 hover:opacity-80">作品集 / 博客 · 预览稿</p>
+            <h1 class="mt-8 text-5xl font-semibold leading-[1.06] tracking-tight text-neutral-50 sm:text-6xl">
+              <span class="text-neutral-200">交付说明与</span>
+              <span class="text-accent">接口边界</span>
+            </h1>
+            <div class="mt-10 space-y-7 text-base leading-[1.75] text-neutral-400">
+              <p>
+                页面优先写清「系统在何种约束下工作」：写入是否幂等、读模型是否允许滞后、失败时用户可见什么。少用形容词，多写可对照代码与日志的句子。
+              </p>
+              <p>
+                公开内容默认脱敏：数据库拓扑、真实 QPS、客户名称不在这里展开。需要评审包请走邮件并附时间表。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模块：项目交错 1 — 左示意 / 右文 -->
+      <section class="bg-neutral-950 py-20 sm:py-28" data-module="project-zigzag-a" aria-labelledby="zigzag-a-title">
+        <div class="mx-auto max-w-6xl px-6 sm:px-10">
+          <div class="flex flex-col items-start gap-14 lg:flex-row lg:items-center lg:gap-16 xl:gap-24">
+            <figure class="w-full shrink-0 transition duration-200 ease-out hover:opacity-95 lg:max-w-[min(100%,26rem)] lg:hover:-translate-y-1">
+              <div class="aspect-[4/3] w-full overflow-hidden border border-neutral-800/80 bg-neutral-900/40">
+                <svg viewBox="0 0 800 600" class="size-full text-accent" role="img" aria-label="结构示意图占位">
+                  <title>结构示意图占位</title>
+                  <rect width="800" height="600" fill="#0a0a0a" />
+                  <path d="M100 420h180M100 420V200M280 200h160" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="2" />
+                  <path d="M380 200v280h300V320H460" fill="none" stroke="currentColor" stroke-width="2" />
+                  <circle cx="100" cy="420" r="7" fill="currentColor" />
+                  <circle cx="380" cy="200" r="7" fill="currentColor" />
+                  <circle cx="680" cy="320" r="7" fill="currentColor" />
+                </svg>
+              </div>
+              <figcaption class="mt-3 max-w-md text-xs leading-relaxed text-neutral-600">占位：状态迁移与只读投影关系（非截图）。</figcaption>
+            </figure>
+            <div class="max-w-3xl space-y-6 lg:pt-4">
+              <h2 id="zigzag-a-title" class="text-5xl font-semibold tracking-tight text-neutral-50 sm:text-6xl">
+                工单编排层
+              </h2>
+              <p class="max-w-prose text-sm leading-relaxed text-neutral-400 sm:text-base sm:leading-relaxed">
+                把跨系统的写入收口到编排服务：外部回调不可靠时，以幂等键与事件表保证可重放。读侧走低频物化视图，接受秒级延迟换取查询成本可控。
+              </p>
+              <ul class="max-w-prose space-y-3 border-l-2 border-accent/40 pl-5 text-sm text-neutral-500 sm:text-base">
+                <li>约束：状态机先定版，再允许产品改字段语义。</li>
+                <li>权衡：首版评审更慢，线上「状态分叉」工单显著减少。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模块：项目交错 2 — 右示意 / 左文 -->
+      <section class="bg-neutral-900/35 py-20 sm:py-28" data-module="project-zigzag-b" aria-labelledby="zigzag-b-title">
+        <div class="mx-auto max-w-6xl px-6 sm:px-10">
+          <div class="flex flex-col items-start gap-14 lg:flex-row-reverse lg:items-center lg:gap-16 xl:gap-24">
+            <figure class="w-full shrink-0 transition duration-200 ease-out hover:opacity-95 lg:max-w-[min(100%,26rem)] lg:hover:-translate-y-1">
+              <div class="aspect-[4/3] w-full overflow-hidden border border-neutral-800/70 bg-neutral-950/50">
+                <svg viewBox="0 0 800 600" class="size-full text-accent" role="img" aria-label="批处理窗口占位">
+                  <title>批处理窗口占位</title>
+                  <rect width="800" height="600" fill="#0a0a0a" />
+                  <rect x="120" y="160" width="560" height="280" fill="none" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" />
+                  <path d="M160 380h480" stroke="currentColor" stroke-width="2" />
+                  <path d="M220 260h40v90h-40zM380 220h40v130h-40zM540 300h40v50h-40z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </div>
+              <figcaption class="mt-3 max-w-md text-xs leading-relaxed text-neutral-600">占位：批次切片与重试边界（示意）。</figcaption>
+            </figure>
+            <div class="max-w-3xl space-y-6 lg:pt-4">
+              <h2 id="zigzag-b-title" class="text-5xl font-semibold tracking-tight text-neutral-50 sm:text-6xl">
+                导出管道
+              </h2>
+              <p class="max-w-prose text-sm leading-relaxed text-neutral-400 sm:text-base sm:leading-relaxed">
+                批处理按租户与时间窗切片；失败写入重试表，人工只介入连续 N 次失败的批次。与业务约定 T+1 SLA，避免为极端峰值提前引入分布式事务。
+              </p>
+              <p class="max-w-prose text-sm text-neutral-500 sm:text-base">
+                监控以批次为粒度聚合：体积、耗时、重复行数。报警阈值来自历史分位数，而不是固定常量拍脑袋。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模块：时间线 — 单列流式 + 左轴偏置 -->
+      <section class="border-y border-neutral-800/50 bg-neutral-950 py-20 sm:py-28" data-module="project-timeline" aria-labelledby="timeline-heading">
+        <div class="mx-auto max-w-6xl px-6 sm:px-10">
+          <div class="mb-14 max-w-3xl sm:mb-16 lg:ml-8">
+            <h2 id="timeline-heading" class="text-5xl font-semibold tracking-tight text-neutral-50 sm:text-6xl">
+              其它条目
+            </h2>
+            <p class="mt-6 max-w-2xl text-sm leading-relaxed text-neutral-500 sm:text-base">时间线只记「何时完成收口」，细节链到仓库与变更单（此处占位）。</p>
+          </div>
+          <div class="max-w-3xl lg:ml-12">
+            <ul class="m-0 list-none space-y-20 p-0 sm:space-y-24">
+              <li class="sm:grid sm:grid-cols-[6.5rem_1fr] sm:gap-x-10">
+                <div class="mb-3 text-sm tabular-nums text-neutral-500 sm:mb-0 sm:pt-1.5 sm:text-right">2024</div>
+                <div class="relative border-l border-neutral-800 pl-6 sm:pl-10">
+                  <span class="absolute -left-px top-2 size-2.5 -translate-x-1/2 rounded-full bg-accent transition duration-200 sm:top-2.5" aria-hidden="true"></span>
+                  <h3 class="text-base font-medium text-neutral-100">接口版本并行期</h3>
+                  <p class="mt-4 text-sm leading-relaxed text-neutral-400 sm:text-base">
+                    v1 与 v2 共存六个月：网关按租户路由。旧客户端未死前，拒绝删除 v1 的写路径。
+                  </p>
+                </div>
+              </li>
+              <li class="sm:grid sm:grid-cols-[6.5rem_1fr] sm:gap-x-10">
+                <div class="mb-3 text-sm tabular-nums text-neutral-500 sm:mb-0 sm:pt-1.5 sm:text-right">2022</div>
+                <div class="relative border-l border-neutral-800 pl-6 sm:pl-10">
+                  <span class="absolute -left-px top-2 size-2.5 -translate-x-1/2 rounded-full bg-accent transition duration-200 sm:top-2.5" aria-hidden="true"></span>
+                  <h3 class="text-base font-medium text-neutral-100">只读副本延迟可接受声明</h3>
+                  <p class="mt-4 text-sm leading-relaxed text-neutral-400 sm:text-base">
+                    报表任务迁到副本；财务对账类仍走主库。文档里写明最大滞后与纠偏流程。
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模块：博客索引 — 列表 -->
+      <section class="bg-neutral-800/30 py-20 sm:py-28" data-module="blog-index" aria-labelledby="blog-heading">
+        <div class="mx-auto max-w-6xl px-6 sm:px-10">
+          <div class="mb-12 max-w-3xl sm:mb-14 lg:mr-8 lg:ml-auto">
+            <h2 id="blog-heading" class="text-5xl font-semibold tracking-tight text-neutral-50 sm:text-6xl">
+              文章索引
+            </h2>
+            <p class="mt-5 max-w-xl text-sm text-neutral-500 sm:text-base">行式列表：标题与日期同一_scan_路径，避免封面矩阵。</p>
+          </div>
+          <nav class="max-w-3xl lg:ml-4" aria-label="文章列表">
+            <ul class="m-0 divide-y divide-neutral-800/90 border-y border-neutral-800/90 p-0">
+              <li class="transition duration-200 ease-out hover:opacity-95 sm:hover:-translate-y-0.5">
+                <div class="flex flex-col gap-1 py-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-9">
+                  <a
+                    class="text-base font-medium text-accent transition duration-200 hover:text-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900/90"
+                    href="#"
+                    >迁移脚本的可重复执行条件</a
+                  >
+                  <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2026-03-12">2026-03-12</time>
+                </div>
+              </li>
+              <li class="transition duration-200 ease-out hover:opacity-95 sm:hover:-translate-y-0.5">
+                <div class="flex flex-col gap-1 py-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-9">
+                  <a
+                    class="text-base font-medium text-accent transition duration-200 hover:text-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900/90"
+                    href="#"
+                    >错误码分层：何时不暴露内部原因</a
+                  >
+                  <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2026-01-28">2026-01-28</time>
+                </div>
+              </li>
+              <li class="transition duration-200 ease-out hover:opacity-95 sm:hover:-translate-y-0.5">
+                <div class="flex flex-col gap-1 py-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10 sm:py-9">
+                  <a
+                    class="text-base font-medium text-accent transition duration-200 hover:text-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900/90"
+                    href="#"
+                    >分页游标与排序稳定性</a
+                  >
+                  <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2025-08-19">2025-08-19</time>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+
+      <!-- 模块：页脚 -->
+      <footer class="border-t border-neutral-800/70 bg-neutral-950 py-16 sm:py-20" data-module="site-footer">
+        <div class="mx-auto max-w-6xl px-6 sm:px-10">
+          <div class="max-w-3xl lg:ml-6">
+            <h2 class="sr-only">联系</h2>
+            <p class="text-sm leading-relaxed text-neutral-500">
+              联系
+              <a
+                class="ml-2 text-accent transition duration-200 hover:text-accent-hover hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+                href="mailto:you@example.dev"
+                >you@example.dev</a
+              >
+              <span class="mx-2 text-neutral-700" aria-hidden="true">·</span>
+              <a
+                class="text-accent transition duration-200 hover:text-accent-hover hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+                href="#"
+                >源码占位</a
+              >
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>项目详情 · 内部工单编排服务</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <span class="font-medium text-emerald-900" aria-current="page">项目</span>
+          <a href="blog.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">博客</a>
+          <a href="profile.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">个人</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#faf8f3] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <p class="mb-10 text-sm text-stone-600 lg:ml-2">
+          <a href="projects.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">项目</a>
+          <span class="mx-2 text-stone-400" aria-hidden="true">/</span>
+          <span class="text-stone-500">内部工单编排服务</span>
+        </p>
+
+        <article class="mx-auto max-w-3xl space-y-14 lg:ml-4" data-page="project-detail">
+          <header class="space-y-6">
+            <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">内部工单编排服务</h1>
+            <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm tabular-nums text-stone-500">
+              <span>周期：2024 Q3 — Q4</span>
+              <span>角色：设计与核心实现（占位）</span>
+            </div>
+            <p class="max-w-2xl text-base leading-relaxed text-stone-600">
+              问题域是跨部门状态不同步：同一工单在三个系统里各自演进。目标不是「实时同步一切」，而是把写入收口到单一编排层，其它系统只读投影。
+            </p>
+          </header>
+
+          <section aria-labelledby="pd-constraints">
+            <h2 id="pd-constraints" class="mb-6 font-serif text-2xl font-semibold text-stone-900">约束</h2>
+            <ul class="m-0 space-y-4 border-l-2 border-emerald-800/25 pl-6 text-base leading-relaxed text-stone-600 sm:pl-8">
+              <li>外部回调不可靠：所有入站必须可重放；幂等键由调用方提供并持久校验。</li>
+              <li>审计优先于吞吐：每条状态迁移落不可变事件表；查询走物化视图。</li>
+              <li>发布窗口短：特性开关控制读路径切换；回滚路径预先演练。</li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="pd-architecture">
+            <h2 id="pd-architecture" class="mb-6 font-serif text-2xl font-semibold text-stone-900">结构</h2>
+            <div class="space-y-6 text-base leading-relaxed text-stone-600">
+              <p>编排服务持有「工单聚合根」；对外暴露三类操作：创建、提交迁移、查询当前状态与历史游标。迁移合法性由状态机定义，非法迁移直接 409，并附带当前可用动作列表。</p>
+              <p>下游系统通过只读 API 订阅投影版本号；版本单调递增，便于客户端做增量缓存失效。</p>
+            </div>
+          </section>
+
+          <section aria-labelledby="pd-tradeoffs">
+            <h2 id="pd-tradeoffs" class="mb-6 font-serif text-2xl font-semibold text-stone-900">权衡</h2>
+            <p class="text-base leading-relaxed text-stone-600">
+              早期需求评审成本升高：产品侧要接受「状态机先固定、后迭代」的节奏。换来的收益是线上偶发不一致工单数量从每周数起降至趋近零（占位指标），以及排障时能用事件序列复盘。
+            </p>
+          </section>
+
+          <section aria-labelledby="pd-links">
+            <h2 id="pd-links" class="mb-6 font-serif text-2xl font-semibold text-stone-900">外链与制品</h2>
+            <ul class="m-0 list-none space-y-4 rounded-xl border border-stone-200 bg-white/80 py-6 text-sm shadow-sm">
+              <li class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 px-6">
+                <span class="text-stone-600">架构说明（脱敏）</span>
+                <a href="#" class="shrink-0 font-medium text-emerald-800 transition hover:text-emerald-900">PDF · 占位</a>
+              </li>
+              <li class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-stone-200 px-6 pt-4">
+                <span class="text-stone-600">OpenAPI 摘要</span>
+                <a href="#" class="shrink-0 font-medium text-emerald-800 transition hover:text-emerald-900">链接占位</a>
+              </li>
+              <li class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-stone-200 px-6 pt-4">
+                <span class="text-stone-600">相关文章</span>
+                <a href="post.html" class="shrink-0 font-medium text-emerald-800 transition hover:text-emerald-900">迁移脚本的可重复执行条件</a>
+              </li>
+            </ul>
+          </section>
+        </article>
+
+        <footer class="mx-auto mt-16 max-w-3xl border-t border-emerald-900/10 pt-10 text-sm text-stone-600 lg:ml-4 md:mt-20">
+          <a href="projects.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">返回项目索引</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

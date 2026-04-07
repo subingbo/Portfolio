@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>项目索引</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <span class="font-medium text-emerald-900" aria-current="page">项目</span>
+          <a href="blog.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">博客</a>
+          <a href="profile.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">个人</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#f3f0e7] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <header class="mb-12 max-w-3xl md:mb-16 lg:ml-2">
+          <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">项目</h1>
+          <p class="mt-6 text-base leading-relaxed text-stone-600">按交付时间倒序。每行一条：标题、一句约束摘要、周期标签。点击进入详情与链接索引。</p>
+        </header>
+
+        <main data-page="projects-index" class="max-w-3xl lg:ml-4">
+          <div class="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-stone-200 pb-8">
+            <p class="text-sm text-stone-600">共 4 条（占位计数）</p>
+            <a href="search.html" class="font-medium text-emerald-800 underline decoration-emerald-800/30 underline-offset-4 transition hover:text-emerald-900">搜索</a>
+          </div>
+          <ul class="m-0 divide-y divide-stone-200 border-y border-stone-200 bg-white/80 p-0 shadow-sm md:rounded-xl md:border">
+            <li class="px-4 py-8 transition hover:bg-emerald-50/40 sm:px-6 sm:py-10">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <div class="min-w-0 flex-1">
+                  <a href="project-detail.html" class="font-serif text-lg font-semibold text-emerald-950 transition hover:text-emerald-800">内部工单编排服务</a>
+                  <p class="mt-3 text-base leading-relaxed text-stone-600">状态机 + 幂等写入；读模型与写模型刻意分离。</p>
+                </div>
+                <p class="shrink-0 text-sm tabular-nums text-stone-500">2024 — Q4</p>
+              </div>
+              <p class="mt-4 text-sm text-stone-500">栈：Java · PostgreSQL · 内部消息总线（占位）</p>
+            </li>
+            <li class="px-4 py-8 transition hover:bg-emerald-50/40 sm:px-6 sm:py-10">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <div class="min-w-0 flex-1">
+                  <a href="project-detail.html" class="font-serif text-lg font-semibold text-emerald-950 transition hover:text-emerald-800">数据导出管道</a>
+                  <p class="mt-3 text-base leading-relaxed text-stone-600">批处理窗口、失败重试表；监控按批次粒度聚合。</p>
+                </div>
+                <p class="shrink-0 text-sm tabular-nums text-stone-500">2023</p>
+              </div>
+              <p class="mt-4 text-sm text-stone-500">栈：批处理调度 · 对象存储（占位）</p>
+            </li>
+            <li class="px-4 py-8 transition hover:bg-emerald-50/40 sm:px-6 sm:py-10">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <div class="min-w-0 flex-1">
+                  <a href="project-detail.html" class="font-serif text-lg font-semibold text-emerald-950 transition hover:text-emerald-800">遗留模块接口收敛</a>
+                  <p class="mt-3 text-base leading-relaxed text-stone-600">双写窗口、读路径先切、写路径后收口。</p>
+                </div>
+                <p class="shrink-0 text-sm tabular-nums text-stone-500">2022</p>
+              </div>
+              <p class="mt-4 text-sm text-stone-500">栈：兼容层 · 特性开关（占位）</p>
+            </li>
+            <li class="px-4 py-8 transition hover:bg-emerald-50/40 sm:px-6 sm:py-10">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <div class="min-w-0 flex-1">
+                  <a href="project-detail.html" class="font-serif text-lg font-semibold text-emerald-950 transition hover:text-emerald-800">公开 API 速率限制中间件</a>
+                  <p class="mt-3 text-base leading-relaxed text-stone-600">令牌桶按租户分片；超限返回明确 Retry-After。</p>
+                </div>
+                <p class="shrink-0 text-sm tabular-nums text-stone-500">2021</p>
+              </div>
+              <p class="mt-4 text-sm text-stone-500">栈：网关插件 · Redis（占位）</p>
+            </li>
+          </ul>
+        </main>
+
+        <footer class="mt-16 border-t border-emerald-900/10 pt-10 text-sm text-stone-600 md:mt-20">
+          <a href="index.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">首页</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

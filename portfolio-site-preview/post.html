@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>迁移脚本的可重复执行条件</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <a href="projects.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">项目</a>
+          <a href="blog.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">博客</a>
+          <a href="profile.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">个人</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#faf8f3] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <p class="mb-10 text-sm text-stone-600 lg:ml-2">
+          <a href="blog.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">文章</a>
+          <span class="mx-2 text-stone-400" aria-hidden="true">/</span>
+          <span class="text-stone-500">迁移脚本的可重复执行条件</span>
+        </p>
+
+        <article class="mx-auto max-w-3xl space-y-14 lg:ml-4" data-page="blog-post">
+          <header class="space-y-6">
+            <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">迁移脚本的可重复执行条件</h1>
+            <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm text-stone-500">
+              <time datetime="2026-03-12" class="tabular-nums">2026-03-12</time>
+              <span class="text-stone-400" aria-hidden="true">·</span>
+              <span>约 6 分钟阅读（占位）</span>
+            </div>
+            <p class="flex flex-wrap gap-x-3 gap-y-1 text-sm text-stone-600">
+              <span>标签：</span>
+              <a href="tags.html" class="font-medium text-emerald-800 underline decoration-emerald-800/30 underline-offset-2 transition hover:text-emerald-900">迁移</a>
+              <span class="text-stone-400" aria-hidden="true">·</span>
+              <a href="tags.html" class="font-medium text-emerald-800 underline decoration-emerald-800/30 underline-offset-2 transition hover:text-emerald-900">数据库</a>
+              <span class="text-stone-400" aria-hidden="true">·</span>
+              <a href="tags.html" class="font-medium text-emerald-800 underline decoration-emerald-800/30 underline-offset-2 transition hover:text-emerald-900">运维</a>
+            </p>
+          </header>
+
+          <div class="space-y-8 text-base leading-relaxed text-stone-600">
+            <p>可重复执行不是「再跑一遍不报错」这么简单，而是：在部分成功、部分失败的中间态下，幂等重试能把系统带到同一终态。前提是把变更拆成可观测的步骤，并且每一步有自己的前置条件。</p>
+            <p>做法是：每一步执行前检查目标结构/数据是否已满足期望；若已满足则跳过并记录审计；若不满足且无法安全继续，则中止并留下明确错误码，避免静默吞掉数据倾斜。</p>
+            <h2 class="pt-4 font-serif text-2xl font-semibold text-stone-900">失败的形状</h2>
+            <p>常见失败是超时后重试：第一次 DDL 已提交，应用层以为失败又发第二次。解决靠「存在性检测 + 版本表」：迁移表记录脚本 ID 与 checksum，只有未执行或 checksum 变更才允许进入危险区。</p>
+            <p>若生产禁止长事务，则大表改 schema 需要分批与回填任务拆分，这在文章层面只记结论：编排权从单一脚本交给作业队列，脚本书写「最小 DDL」，数据迁移单独度量进度。</p>
+          </div>
+        </article>
+
+        <section class="mx-auto mt-16 max-w-3xl border-t border-emerald-900/10 pt-14 lg:ml-4" aria-labelledby="comments-heading" data-module="post-comments">
+          <h2 id="comments-heading" class="font-serif text-3xl font-semibold text-stone-900">评论</h2>
+          <p class="mb-10 mt-4 text-sm text-stone-600">共 3 条（占位）。嵌套通过左侧边线表示层级，不使用卡片。</p>
+
+          <ul class="m-0 list-none space-y-10 p-0">
+            <li class="border-l-2 border-emerald-800/25 pl-6 sm:pl-8">
+              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-stone-500">
+                <span class="font-semibold text-emerald-950">reader_a</span>
+                <time class="tabular-nums" datetime="2026-03-13T10:20">2026-03-13 10:20</time>
+              </div>
+              <p class="mt-4 text-base leading-relaxed text-stone-600">如果断点设在 DDL 之后、回填之前，重试时会不会重复消费消息？这里假设用 consumer group 的单分区顺序吗？</p>
+              <ul class="m-0 mt-8 list-none space-y-8 border-l-2 border-emerald-800/20 pl-6 sm:pl-8">
+                <li>
+                  <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-stone-500">
+                    <span class="font-semibold text-emerald-950">作者（占位）</span>
+                    <time class="tabular-nums" datetime="2026-03-13T14:02">2026-03-13 14:02</time>
+                  </div>
+                  <p class="mt-4 text-base leading-relaxed text-stone-600">是的，回填任务要带业务主键范围与幂等写入；重放时以「行版本/更新时间」做护栏，避免二次累加。</p>
+                </li>
+              </ul>
+            </li>
+            <li class="border-l-2 border-emerald-800/25 pl-6 sm:pl-8">
+              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-stone-500">
+                <span class="font-semibold text-emerald-950">reader_b</span>
+                <time class="tabular-nums" datetime="2026-03-14T09:11">2026-03-14 09:11</time>
+              </div>
+              <p class="mt-4 text-base leading-relaxed text-stone-600">checksum 变更时你们是拒绝执行还是走人工闸门？</p>
+            </li>
+          </ul>
+
+          <form class="mt-14 max-w-xl space-y-8 border-t border-stone-200 pt-14" action="#" method="post">
+            <h3 class="font-serif text-lg font-semibold text-stone-900">发表评论</h3>
+            <p class="text-sm text-stone-600">未登录用户可填昵称与邮箱（占位）。生产环境应接入登录态与反垃圾策略。</p>
+            <div class="space-y-2">
+              <label for="c-name" class="block text-sm font-medium text-stone-700">昵称</label>
+              <input id="c-name" type="text" class="w-full border-b border-stone-300 bg-transparent py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-700" placeholder="公开显示" />
+            </div>
+            <div class="space-y-2">
+              <label for="c-body" class="block text-sm font-medium text-stone-700">正文</label>
+              <textarea id="c-body" rows="5" class="w-full resize-y rounded-xl border border-stone-200 bg-white p-4 text-stone-900 outline-none shadow-sm transition placeholder:text-stone-400 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/30"></textarea>
+            </div>
+            <button
+              type="submit"
+              class="rounded-lg bg-emerald-800 px-6 py-3 text-sm font-medium text-[#faf8f3] shadow-md shadow-emerald-900/10 transition hover:bg-emerald-900 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]"
+            >
+              发布（静态预览）
+            </button>
+          </form>
+        </section>
+
+        <footer class="mx-auto mt-16 max-w-3xl border-t border-emerald-900/10 pt-10 text-sm text-stone-600 lg:ml-4 md:mt-20">
+          <a href="blog.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">返回文章索引</a>
+          <span class="mx-2 text-stone-400" aria-hidden="true">·</span>
+          <a href="recent-comments.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">全站评论</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

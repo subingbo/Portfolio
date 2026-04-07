@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>作品集与博客 · 结构预览</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "ui-sans-serif",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Helvetica Neue",
+                "Arial",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-neutral-950 text-neutral-300 antialiased selection:bg-neutral-700 selection:text-neutral-100">
+    <!-- 模块：全局壳层（后续可拆为 AppLayout / PageShell） -->
+    <div class="mx-auto w-full max-w-[820px] px-6 pb-24 pt-12 sm:px-8 sm:pt-16">
+      <!-- 模块：首页自述 -->
+      <header class="mb-20 space-y-8 sm:mb-24" data-module="intro">
+        <p class="text-sm font-medium tracking-wide text-neutral-500">结构预览 · 占位</p>
+        <h1 class="text-[2.5rem] font-semibold leading-tight tracking-tight text-neutral-100 sm:text-5xl">
+          工程笔记与交付边界
+        </h1>
+        <div class="space-y-6 text-[17px] leading-[1.7] text-neutral-400">
+          <p>
+            主职在「可维护性」与「交付周期」之间做取舍：接口先定、数据流后收敛，避免在后半程返工改契约。偏好把复杂度留在构建期与类型边界，而不是塞进运行时分支。
+          </p>
+          <p>
+            当前栈以后端与集成居多；前端只做必要交互，页面结构尽量扁平，减少嵌套与状态分叉。下文项目按时间排列，右侧是当时的约束与结果摘要。
+          </p>
+        </div>
+      </header>
+
+      <main class="space-y-20 sm:space-y-24">
+        <!-- 模块：项目时间线（左轴 + 右文） -->
+        <section data-module="project-timeline" aria-labelledby="timeline-heading">
+          <h2 id="timeline-heading" class="mb-12 text-[2.5rem] font-semibold tracking-tight text-neutral-100 sm:text-5xl">
+            项目时间线
+          </h2>
+          <div class="relative">
+            <ul class="m-0 list-none space-y-16 p-0 sm:space-y-20">
+              <li class="relative pl-0 sm:grid sm:grid-cols-[7rem_1fr] sm:gap-x-10 sm:gap-y-0">
+                <div class="mb-3 text-sm tabular-nums text-neutral-500 sm:mb-0 sm:pt-1 sm:text-right">2024 — Q4</div>
+                <div class="relative border-l border-neutral-800 pl-6 sm:pl-8">
+                  <span class="absolute -left-px top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-neutral-500 sm:top-3" aria-hidden="true"></span>
+                  <h3 class="text-lg font-medium text-neutral-100">内部工单编排服务</h3>
+                  <p class="mt-4 text-base leading-relaxed text-neutral-400">
+                    将多源状态收敛为有限状态机；对外只暴露幂等写入与查询视图。代价是首批需求要额外建模，换来可审计的变更链与更少的「手写补丁」。
+                  </p>
+                </div>
+              </li>
+              <li class="relative pl-0 sm:grid sm:grid-cols-[7rem_1fr] sm:gap-x-10 sm:gap-y-0">
+                <div class="mb-3 text-sm tabular-nums text-neutral-500 sm:mb-0 sm:pt-1 sm:text-right">2023</div>
+                <div class="relative border-l border-neutral-800 pl-6 sm:pl-8">
+                  <span class="absolute -left-px top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-neutral-500 sm:top-3" aria-hidden="true"></span>
+                  <h3 class="text-lg font-medium text-neutral-100">数据导出管道</h3>
+                  <p class="mt-4 text-base leading-relaxed text-neutral-400">
+                    批处理 + 失败重试表；限制单批体积以控制锁竞争。与业务方约定 SLA 为 T+1，换取实现简单与监控覆盖完备。
+                  </p>
+                </div>
+              </li>
+              <li class="relative pl-0 sm:grid sm:grid-cols-[7rem_1fr] sm:gap-x-10 sm:gap-y-0">
+                <div class="mb-3 text-sm tabular-nums text-neutral-500 sm:mb-0 sm:pt-1 sm:text-right">2022</div>
+                <div class="relative border-l border-neutral-800 pl-6 sm:pl-8">
+                  <span class="absolute -left-px top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-neutral-500 sm:top-3" aria-hidden="true"></span>
+                  <h3 class="text-lg font-medium text-neutral-100">遗留模块接口收敛</h3>
+                  <p class="mt-4 text-base leading-relaxed text-neutral-400">
+                    读路径与新表对齐，写路径暂时双写；迁移窗口约六个月。权衡是短期代码路径翻倍，长期删除旁路调用。
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 模块：博客文章索引（列表式） -->
+        <section data-module="blog-index" aria-labelledby="blog-heading">
+          <h2 id="blog-heading" class="mb-12 text-[2.5rem] font-semibold tracking-tight text-neutral-100 sm:text-5xl">
+            文章索引
+          </h2>
+          <nav aria-label="文章列表">
+            <ul class="m-0 divide-y divide-neutral-800 border-y border-neutral-800 p-0">
+              <li class="flex flex-col gap-1 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <a class="text-base font-medium text-neutral-100 underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950" href="#"
+                  >迁移脚本的可重复执行条件</a
+                >
+                <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2026-03-12">2026-03-12</time>
+              </li>
+              <li class="flex flex-col gap-1 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <a class="text-base font-medium text-neutral-100 underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950" href="#"
+                  >错误码分层：何时不暴露内部原因</a
+                >
+                <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2026-01-28">2026-01-28</time>
+              </li>
+              <li class="flex flex-col gap-1 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <a class="text-base font-medium text-neutral-100 underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950" href="#"
+                  >日志字段最小集与检索成本</a
+                >
+                <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2025-11-04">2025-11-04</time>
+              </li>
+              <li class="flex flex-col gap-1 py-7 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                <a class="text-base font-medium text-neutral-100 underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950" href="#"
+                  >分页游标与排序稳定性</a
+                >
+                <time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2025-08-19">2025-08-19</time>
+              </li>
+            </ul>
+          </nav>
+        </section>
+      </main>
+
+      <!-- 模块：页脚 / 联系方式 -->
+      <footer class="mt-24 border-t border-neutral-800 pt-14 sm:mt-28 sm:pt-16" data-module="site-footer">
+        <h2 class="sr-only">联系</h2>
+        <p class="text-sm leading-relaxed text-neutral-500">
+          联系：
+          <a class="text-neutral-300 underline-offset-4 hover:text-neutral-100 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950" href="mailto:you@example.dev">you@example.dev</a>
+          <span class="mx-2 text-neutral-700" aria-hidden="true">·</span>
+          <a class="text-neutral-300 underline-offset-4 hover:text-neutral-100 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950" href="#">源码</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

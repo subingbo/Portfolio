@@ -118,6 +118,8 @@ security:
     - /warm-flow-ui/config
     # 作品集公开访问（列表、详情、热门等，无需登录）
     - /portfolio/app/**
+    # 博客前台接口（文章、分类、标签、评论，无需登录）
+    - /blog/front/**
 
 # 多租户配置
 tenant:
@@ -136,6 +138,11 @@ tenant:
     - sys_oss_config
     - flow_spel
     - portfolio_project
+    - blog_article
+    - blog_category
+    - blog_tag
+    - blog_article_tag
+    - blog_comment
 
 # MyBatisPlus配置
 # https://baomidou.com/config/

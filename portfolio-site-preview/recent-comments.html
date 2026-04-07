@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- 视觉：Style 2 清新博客风 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>近期评论</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#faf8f3] text-stone-800 antialiased">
+    <header class="border-b border-emerald-900/10 bg-[#faf8f3]/90 backdrop-blur-sm" data-module="site-header">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a href="index.html" class="font-serif text-xl font-semibold tracking-tight text-emerald-900 transition hover:text-emerald-950 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">作品集 / 博客</a>
+        <nav aria-label="主导航" class="flex flex-wrap gap-6 text-sm text-stone-600">
+          <a href="index.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">首页</a>
+          <a href="projects.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">项目</a>
+          <a href="blog.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">博客</a>
+          <a href="profile.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">个人</a>
+          <a href="login.html" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">登录</a>
+        </nav>
+        <div class="flex gap-5 text-sm text-stone-600">
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">GitHub</a>
+          <a href="#" class="transition hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]">LinkedIn</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="border-t border-emerald-900/5 bg-[#eef6f0] px-5 py-14 md:px-8 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <header class="mb-12 max-w-3xl md:mb-16 lg:ml-2">
+          <h1 class="font-serif text-5xl font-semibold leading-[1.08] tracking-tight text-stone-900 md:text-6xl">近期评论</h1>
+          <p class="mt-6 text-base leading-relaxed text-stone-600">全站时间序列表；每行指向来源文章。供你审核「聚合页」信息密度与跳转路径。</p>
+        </header>
+
+        <main class="max-w-3xl lg:ml-4" data-page="recent-comments">
+          <ul class="m-0 divide-y divide-stone-200 border-y border-stone-200 bg-white/80 p-0 shadow-sm md:rounded-xl md:border">
+            <li class="px-4 py-8 transition hover:bg-emerald-50/50 sm:px-6 sm:py-10">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                <p class="text-sm font-semibold text-emerald-950">reader_a</p>
+                <time class="text-sm tabular-nums text-stone-500" datetime="2026-03-13T10:20">2026-03-13 10:20</time>
+              </div>
+              <p class="mt-4 text-base leading-relaxed text-stone-600">如果断点设在 DDL 之后、回填之前，重试时会不会重复消费消息？…</p>
+              <p class="mt-6 text-sm text-stone-500">
+                出自：
+                <a href="post.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">迁移脚本的可重复执行条件</a>
+              </p>
+            </li>
+            <li class="px-4 py-8 transition hover:bg-emerald-50/50 sm:px-6 sm:py-10">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                <p class="text-sm font-semibold text-emerald-950">reader_b</p>
+                <time class="text-sm tabular-nums text-stone-500" datetime="2026-03-14T09:11">2026-03-14 09:11</time>
+              </div>
+              <p class="mt-4 text-base leading-relaxed text-stone-600">checksum 变更时你们是拒绝执行还是走人工闸门？</p>
+              <p class="mt-6 text-sm text-stone-500">
+                出自：
+                <a href="post.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">迁移脚本的可重复执行条件</a>
+              </p>
+            </li>
+            <li class="px-4 py-8 transition hover:bg-emerald-50/50 sm:px-6 sm:py-10">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                <p class="text-sm font-semibold text-emerald-950">visitor_c</p>
+                <time class="text-sm tabular-nums text-stone-500" datetime="2026-02-02T16:40">2026-02-02 16:40</time>
+              </div>
+              <p class="mt-4 text-base leading-relaxed text-stone-600">建议补一节：对外错误码与内部 ticket 的映射表怎么维护。</p>
+              <p class="mt-6 text-sm text-stone-500">
+                出自：
+                <a href="post.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">错误码分层：何时不暴露内部原因</a>
+              </p>
+            </li>
+          </ul>
+        </main>
+
+        <footer class="mt-16 border-t border-emerald-900/10 pt-10 text-sm text-stone-600 md:mt-20">
+          <a href="blog.html" class="font-medium text-emerald-800 transition hover:text-emerald-900">返回文章索引</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
