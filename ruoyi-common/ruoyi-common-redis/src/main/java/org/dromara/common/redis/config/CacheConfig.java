@@ -2,6 +2,7 @@ package org.dromara.common.redis.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.dromara.common.redis.aspect.CacheRedissonAspect;
 import org.dromara.common.redis.manager.PlusSpringCacheManager;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cache.CacheManager;
@@ -40,6 +41,11 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager() {
         return new PlusSpringCacheManager();
+    }
+
+    @Bean
+    public CacheRedissonAspect cacheRedissonAspect(CacheManager cacheManager) {
+        return new CacheRedissonAspect(cacheManager);
     }
 
 }
